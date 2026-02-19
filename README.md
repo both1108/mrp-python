@@ -111,5 +111,49 @@ This project demonstrates practical exploration of:
 - Smart manufacturing analytics
 - Cross-database integration
 - Data-driven production planning
+## Installation
+
+1. Clone the repository:
+
+git clone https://github.com/both1108/mrp-python.git
+cd mrp-python
+
+2. Create a virtual environment (recommended):
+
+python -m venv .venv
+
+Activate the virtual environment:
+
+Windows:
+.venv\Scripts\activate
+
+Mac / Linux:
+source .venv/bin/activate
+
+3. Install required dependencies:
+
+pip install -r requirements.txt
+
+If requirements.txt is not available, install manually:
+
+pip install pandas matplotlib python-dotenv psycopg2 pymysql
+
+4. Configure environment variables:
+
+Create a .env file in the project root and configure:
+
+PostgreSQL (E-commerce)
+PG_HOST=your_host
+PG_DB=your_database
+PG_USER=your_username
+PG_PASSWORD=your_password
+PG_PORT=5432
+
+MySQL (ERP)
+MYSQL_HOST=your_host
+MYSQL_PORT=3306
+MYSQL_DB=your_database
+MYSQL_USER=your_username
+MYSQL_PASSWORD=your_password
 
 
