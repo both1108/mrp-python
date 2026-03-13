@@ -1,155 +1,117 @@
-# IoT-Based Smart Manufacturing Data Simulation
+# Smart Manufacturing MRP & IoT Simulation Dashboard
 
 ## Overview
 
-This project simulates industrial IoT machine health data and analyzes its impact on production capacity and demand forecasting.
+This project demonstrates a **Smart Manufacturing analytics system** that integrates:
 
-It integrates ERP manufacturing data (MySQL) and transactional data (PostgreSQL) to demonstrate how equipment performance affects operational planning.
+- Industrial IoT machine data
+- ERP manufacturing data
+- E-commerce order data
+- Demand forecasting
+- MRP material planning
 
----
-
-## Objectives
-
-- Simulate industrial IoT data (temperature, vibration, RPM)
-- Calculate machine health scores
-- Adjust production capacity based on equipment condition
-- Perform demand forecasting adjustments
-- Visualize manufacturing performance trends
+The system simulates how **machine health impacts production capacity and procurement planning**, and visualizes the results through an interactive dashboard.
 
 ---
 
-## System Architecture
+## Key Features
 
-- PostgreSQL → E-commerce transactional data
-- MySQL → ERP manufacturing data
-- Python → Data processing and analysis
-- Matplotlib → Data visualization
-
-The system connects to two databases to simulate cross-system data integration in a manufacturing environment.
-
----
-
-## Key Components
-
-### 1️⃣ iot_simulator.py
-
-Generates simulated industrial machine data including:
+### Industrial IoT Simulation
+Simulates real-time machine sensor data including:
 
 - Temperature
 - Vibration
 - RPM
-- Equipment health score
 
-Used for testing manufacturing performance impact.
-
-Run:python iot_simulator.py
-
+Machine health scores are calculated from sensor conditions and used to adjust production capacity.
 
 ---
 
-### 2️⃣ analysis4.py
+### Demand Forecasting
 
-Performs manufacturing data analysis:
+Historical order data is analyzed to estimate short-term demand:
 
-- Retrieves ERP and demand data
-- Applies machine health-based capacity adjustment
-- Compares original vs adjusted forecast
-- Generates visualization charts
+- Uses recent order history
+- Calculates weekday-based averages
+- Generates a 7-day forecast
 
-Run:python analysis4.py
-
+Machine health is then applied as a **capacity adjustment factor**.
 
 ---
 
-## Environment Configuration
+### MRP Material Planning
 
-Create a `.env` file in the project root and configure:
+The system performs a simplified **Material Requirements Planning (MRP)** simulation:
 
-### PostgreSQL (E-commerce)
+1. Explodes BOM structure
+2. Calculates part demand from forecasted product demand
+3. Considers current inventory
+4. Considers incoming purchase orders
+5. Identifies potential shortages
+6. Generates recommended purchase quantities
 
-PG_HOST=your_host
-PG_DB=your_database
-PG_USER=your_username
-PG_PASSWORD=your_password
-PG_PORT=5432
-### MySQL (ERP)
-MYSQL_HOST=your_host
-MYSQL_PORT=3306
-MYSQL_DB=your_database
-MYSQL_USER=your_username
-MYSQL_PASSWORD=your_password
+---
 
+### Interactive Dashboard
 
-Database credentials are managed via environment variables for security and flexibility.
+A real-time dashboard built with **Flask + Plotly** visualizes:
+
+- Machine health monitoring
+- Forecast comparison (original vs IoT-adjusted demand)
+- Procurement recommendations
+- Risk part detection
+
+The dashboard updates automatically every few seconds.
+
+---
+
+## Data Sources
+
+The system integrates two databases to simulate real enterprise environments:
+
+**PostgreSQL**
+- E-commerce transactional data
+- Orders and order items
+
+**MySQL**
+- ERP manufacturing data
+- BOM structures
+- Inventory
+- Purchase orders
+- IoT machine data
 
 ---
 
 ## Technologies Used
 
 - Python
-- SQL
+- Flask
+- Pandas
+- Plotly
 - PostgreSQL
 - MySQL
-- Matplotlib
 - dotenv
 
 ---
 
-## Sample Output
+## Running the Project
 
-- Machine health monitoring chart
-- Demand comparison (Original vs IoT-adjusted)
-- Capacity impact analysis
+Start the dashboard:
+python analysis8.py
+Open in browser:
+http://127.0.0.1:5000
 
 ---
 
-## Learning Outcome
+## Environment Configuration
 
-This project demonstrates practical exploration of:
-
-- Industrial IoT simulation
-- Smart manufacturing analytics
-- Cross-database integration
-- Data-driven production planning
-## Installation
-
-1. Clone the repository:
-
-git clone https://github.com/both1108/mrp-python.git
-cd mrp-python
-
-2. Create a virtual environment (recommended):
-
-python -m venv .venv
-
-Activate the virtual environment:
-
-Windows:
-.venv\Scripts\activate
-
-Mac / Linux:
-source .venv/bin/activate
-
-3. Install required dependencies:
-
-pip install -r requirements.txt
-
-If requirements.txt is not available, install manually:
-
-pip install pandas matplotlib python-dotenv psycopg2 pymysql
-
-4. Configure environment variables:
-
-Create a .env file in the project root and configure:
-
-PostgreSQL (E-commerce)
+Create a `.env` file:
 PG_HOST=your_host
 PG_DB=your_database
 PG_USER=your_username
 PG_PASSWORD=your_password
 PG_PORT=5432
 
-MySQL (ERP)
 MYSQL_HOST=your_host
 MYSQL_PORT=3306
 MYSQL_DB=your_database
@@ -157,3 +119,22 @@ MYSQL_USER=your_username
 MYSQL_PASSWORD=your_password
 
 
+---
+
+## IoT Data Simulator
+
+To generate machine data:
+
+This will continuously insert simulated sensor data into the database.
+
+---
+
+## Learning Outcomes
+
+This project demonstrates practical concepts in:
+
+- Industrial IoT data simulation
+- Smart manufacturing analytics
+- MRP planning logic
+- Cross-database integration
+- Real-time dashboard development
