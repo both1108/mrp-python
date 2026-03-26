@@ -1,0 +1,34 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+LOOKBACK_DAYS = 30
+FORECAST_DAYS = 7
+DEFAULT_LEADTIME_DAYS = 3
+IOT_LOOKBACK_HOURS = 24
+
+TEMP_BASE = 75.0
+TEMP_WORST = 95.0
+VIB_BASE = 0.05
+VIB_WORST = 0.12
+RPM_TARGET = 1500.0
+RPM_TOLERANCE = 300.0
+
+PG_HOST = os.getenv("PG_HOST")
+PG_DB = os.getenv("PG_DB")
+PG_USER = os.getenv("PG_USER")
+PG_PASSWORD = os.getenv("PG_PASSWORD")
+PG_PORT = int(os.getenv("PG_PORT", "5432"))
+
+MYSQL_HOST = os.getenv("MYSQL_HOST", "mysql")
+MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
+MYSQL_USER = os.getenv("MYSQL_USER", "root")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "root")
+MYSQL_DB = os.getenv("MYSQL_DB", "erp")
+
+SIMULATOR_RETRIES = int(os.getenv("SIMULATOR_RETRIES", "20"))
+SIMULATOR_RETRY_DELAY = int(os.getenv("SIMULATOR_RETRY_DELAY", "3"))
+SIMULATOR_SLEEP_SECONDS = int(os.getenv("SIMULATOR_SLEEP_SECONDS", "3"))
+SIMULATOR_CLEANUP_EVERY = int(os.getenv("SIMULATOR_CLEANUP_EVERY", "20"))
+SIMULATOR_CLEANUP_MINUTES = int(os.getenv("SIMULATOR_CLEANUP_MINUTES", "30"))

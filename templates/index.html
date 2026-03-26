@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>智慧製造 Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
+            background: #081224;
+            color: #eaf2ff;
+        }
+        .header {
+            padding: 20px 30px;
+            background: linear-gradient(90deg, #0c1f3f, #102c57);
+            border-bottom: 1px solid #1f4f8a;
+            position: relative;
+        }
+        .container { padding: 20px; }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .full { grid-column: 1 / -1; }
+        .card {
+            background: #0f1b33;
+            border: 1px solid #17375f;
+            border-radius: 14px;
+            padding: 18px;
+        }
+        .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .tag {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 6px 6px 0 0;
+            border-radius: 20px;
+        }
+        .tag.danger {
+            background: rgba(255, 80, 80, 0.15);
+            border: 1px solid #ff6b6b;
+        }
+        .tag.ok {
+            background: rgba(80, 255, 140, 0.12);
+            border: 1px solid #58d68d;
+        }
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+            font-size: 14px;
+        }
+        table.data-table th, table.data-table td {
+            border: 1px solid #1d3f66;
+            padding: 8px 10px;
+            text-align: center;
+        }
+        table.data-table th {
+            background: #12315a;
+        }
+        .loading {
+            color: #8fb7ff;
+            margin-top: 10px;
+        }
+        .lang-btn {
+            font-size: 14px;
+            width: 70px;
+            height: 30px;
+            margin-left: 6px;
+            border-radius: 6px;
+            border: 1px solid #1f4f8a;
+            background: #102c57;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover {
+            background: #1a3f75;
+        }
+        .machine-selector {
+            background: #102c57;
+            color: #fff;
+            border: 1px solid #1f4f8a;
+            border-radius: 6px;
+            padding: 6px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="position:absolute; right:30px; top:25px;">
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('zh')">中文</button>
+        </div>
+        <h1 id="title">智慧製造即時監控 Dashboard</h1>
+        <p><span id="label_updated_at">更新時間：</span> <span id="updated_at">載入中...</span></p>
+    </div>
+
+    <div class="container">
+        <div class="kpi-grid">
+            <div class="card"><h3 id="label_avg_health">平均設備健康度</h3><div class="value" id="avg_health">-</div></div>
+            <div class="card"><h3 id="label_min_health">最低設備健康度</h3><div class="value" id="min_health">-</div></div>
+            <div class="card"><h3 id="label_capacity_factor">產能修正係數</h3><div class="value" id="capacity_factor">-</div></div>
+            <div class="card"><h3 id="label_original_qty">預測總需求</h3><div class="value" id="total_original_qty">-</div></div>
+            <div class="card"><h3 id="label_forecast_qty">預估總產出</h3><div class="value" id="total_forecast_qty">-</div></div>
+            <div class="card"><h3 id="label_risk_po">風險零件數 / 建議採購量</h3><div class="value" id="risk_po">-</div></div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="card"><div id="compare_chart"></div></div>
+
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 id="iot_chart_title_text" style="margin:0;">Machine Health Monitoring</h3>
+                    <select id="machine_selector" class="machine-selector"></select>
+                </div>
+                <div id="iot_chart"></div>
+            </div>
+
+            <div class="card full"><div id="po_chart"></div></div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="card">
+                <h3 id="label_risk_parts">風險零件</h3>
+                <div id="risk_parts"></div>
+            </div>
+            <div class="card">
+                <h3 id="label_summary">系統摘要</h3>
+                <div id="summary_block"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 id="label_po_table">採購建議明細</h3>
+            <div id="po_table"></div>
+        </div>
+
+        <div class="loading" id="status_text">資料更新中...</div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

@@ -25,11 +25,12 @@ By combining forecasting, capacity adjustment, and MRP logic, this system provid
 
 ## 🔄 System Flow
 
+The system processes data through a multi-stage pipeline:
 ![System Flow](system_flow.png)
 ---
 
 ## 🚀 Key Features
-
+This project simulates a production decision system where data flows across multiple layers.
 ### 🔧 Industrial IoT Simulation
 - Simulates real-time machine sensor data:
   - Temperature
@@ -74,18 +75,28 @@ Built with **Flask + Plotly**
 
 ---
 
-## 🗄️ System Architecture
+## 🏗 System Architecture
 
-### PostgreSQL
-- E-commerce transactional data  
-- Orders / Order items  
+This system is designed as a modular data pipeline integrating multiple layers:
 
-### MySQL
-- ERP data  
-- BOM structure  
-- Inventory  
-- Purchase orders  
-- IoT machine data  
+### 1. Data Layer
+- **PostgreSQL**: Order transactions (demand source)
+- **MySQL**: ERP data (BOM, inventory, machine data)
+
+### 2. Simulation Layer
+- IoT simulator generates real-time machine sensor data
+
+### 3. Service Layer
+- Demand forecasting
+- Machine health evaluation
+- Capacity adjustment
+- MRP calculation
+
+### 4. API Layer
+- Flask-based API serving processed data to frontend
+
+### 5. Visualization Layer
+- Plotly dashboard for monitoring and decision support
 
 ---
 
@@ -149,6 +160,18 @@ PG_DB=transactions
 - Continuously inserts simulated machine data
 - Updates every few seconds
 - Keeps only the latest 30 minutes of data (auto-cleanup)
+
+---
+
+## 🔧 Refactoring
+
+This project was originally implemented as a single script and later refactored into a modular architecture.
+
+- Separated business logic into service layers
+- Improved code readability and maintainability
+- Preserved identical outputs before and after refactoring
+
+This demonstrates the transition from **script-based coding to system-oriented design**.
 
 ---
 

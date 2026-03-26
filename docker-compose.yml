@@ -11,7 +11,7 @@ services:
       - .env
     volumes:
       - .:/app
-    command: ["python", "analysis8.py"]
+    command: ["python", "app.py"]
     ports:
       - "5000:5000"
 
